@@ -26,14 +26,14 @@ const Header = () => {
 
   const auth = getAuth(app);
 
-  const history = useHref();
+  //const history = useNavigate();
 
   const showUser = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user);
         setIsLogin(true);
-        history.replace("/");
+        navigate("/", { replace: true });
         //window.location.replace("/");
         // ...
       } else {
