@@ -1,0 +1,14 @@
+.slidebar-container {
+  display: flex;
+  flex-direction: column;
+}
+.slidebar-system-item {
+  background-color: rgb(204, 204, 211);
+  padding: 2px 4px;
+  border-radius: 5px;
+  margin: 4px;
+}
+.slidebar-system-item:hover {
+  background-color: rgb(212, 212, 216);
+  cursor: pointer;
+}

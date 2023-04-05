@@ -1,33 +1,31 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Login } from "./containers/Public";
+import { Home, Login, Homepage } from "./containers/Screens";
 import { path } from "./ultils/constant";
-
-import { getDatabase, ref, child, get } from "firebase/database";
-import database from "./firebase";
+import { System } from "./containers/Systems";
+import { AuthProvider } from "./api/AuthApi";
+import DetailPost from "./containers/Screens/DetailPost/DetailPost";
+import CreatePost from "./containers/Systems/CreatePost/CreatePost";
+// import Homepage from "./containers/Screens/Homepage";
 function App() {
-  // realtime database firebase
-  // const dbRef = ref(database);
-
-  // get(child(dbRef, `Users/aZTfWjnkx8Rl7ZHujbpj31HtYe52`))
-  //   .then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       console.log(typeof snapshot.val().age);
-  //     } else {
-  //       console.log("No data available");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
+  // const { currentUser } = useContext(AuthContext);
   return (
-    <div className="h-screen w-screen bg-primary">
-      <Routes>
-        <Route path={path.HOME} element={<Home />}>
-          <Route path={path.LOGIN} element={<Login />} />
-        </Route>
-      </Routes>
-    </div>
+    <AuthProvider>
+      <div className="justify-center flex">
+        <Routes>
+          <Route path={path.HOME} element={<Home />}>
+            <Route path="*" element={<Homepage />} />
+            <Route path={path.LOGIN} element={<Login />} />
+            <Route
+              path={path.DETAIL_POST_TITLE_POSTID}
+              element={<DetailPost />}
+            />
+          </Route>
+          <Route path={path.SYSTEM} element={<System />}>
+            <Route path={path.CREATE_POST} element={<CreatePost />} />
+          </Route>
+        </Routes>
+      </div>
+    </AuthProvider>
   );
 }
-
 export default App;

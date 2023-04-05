@@ -1,0 +1,16 @@
+.user_name {
+  position: relative;
+}
+.modal_user {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  box-shadow: black;
+  padding: 4px;
+  min-width: 200px;
+  border-radius: 10px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}

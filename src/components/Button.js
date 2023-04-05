@@ -1,5 +1,5 @@
 import React from "react";
-
+import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 const Button = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
   return (
     <button

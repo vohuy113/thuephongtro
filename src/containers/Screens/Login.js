@@ -11,12 +11,12 @@ import {
   browserSessionPersistence,
 } from "firebase/auth";
 import app from "../../firebase";
-//import { getAuth } from "firebase/auth";
+import { login } from "../../api/AuthApi";
 
 const Login = () => {
   const location = useLocation();
   const [isRegister, setIsRegister] = useState(location.state?.flag);
-  const [isLogin, setIsogin] = useState("");
+  //const [isLogin, setIsogin] = useState("");
   useEffect(() => {
     setIsRegister(location.state?.flag);
   }, [location.state?.flag]);
@@ -47,30 +47,10 @@ const Login = () => {
       });
   };
 
-  // set persist User
-  // const UserPersist = () => {
-  //   setPersistence(auth, browserSessionPersistence)
-  //     .then(() => {
-  //       // Existing and future Auth states are now persisted in the current
-  //       // session only. Closing the window would clear any existing state even
-  //       // if a user forgets to sign out.
-  //       // ...
-  //       // New sign-in will be persisted with session persistence.
-  //       return signInWithEmailAndPassword(auth, email, password);
-  //     })
-  //     .catch((error) => {
-  //       // Handle Errors here.
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //     });
-  // };
-
   // quản lý User
   const showUser = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         const email = user.email;
         //setIsogin(uid);
@@ -84,23 +64,20 @@ const Login = () => {
       }
     });
   };
-
   const signIn = () => {
-    console.log("hello");
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("signIn success");
-        showUser();
-        //UserPersist();
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    login(auth, email, password)
+      .then(handleSignInSuccess)
+      .catch(handleSignInError);
+  };
+
+  const handleSignInSuccess = (userCredential) => {
+    const user = userCredential.user;
+    console.log("signIn success", user);
+    showUser();
+  };
+
+  const handleSignInError = (error) => {
+    console.log(error);
   };
 
   return (
@@ -118,7 +95,6 @@ const Login = () => {
         />
         <Button
           onClick={isRegister ? signUp : signIn}
-          //onClick={signUp}
           text={isRegister ? "Đăng ký" : "Đăng nhập"}
           bgColor={"bg-secondary1"}
           textColor={"text-black"}
