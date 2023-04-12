@@ -1,23 +1,25 @@
 module.exports = {
-  content: ["./src/**/*.{html,js}",
-    './public/index.html'],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}", "./public/index.html"],
 
   theme: {
-    extend: {},
+    extend: {
       width: {
-        '1100': '1100px'
+        1100: "1100px",
       },
       backgroundColor: {
-        primary: '#F5F5F5',
-        secondary1: '#1266dd',
-        secondary2: '#f73859'
+        primary: "#F5F5F5",
+        secondary1: "#1266dd",
+        secondary2: "#f73859",
       },
+
       maxWidth: {
-        '600':'600px'
+        600: "600px",
       },
-      cursor:{
-        pointer:'pointer'
-      }
+      cursor: {
+        pointer: "pointer",
+      },
+    },
   },
+
   plugins: [],
-}
+};

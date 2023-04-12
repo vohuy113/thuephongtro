@@ -35,9 +35,10 @@ const Homepage = () => {
       </div>
       <Search />
       <MySlider></MySlider>
-      {listPost.map((item, index) => (
-        <Item key={index} post={item} />
-      ))}
+      {listPost.map(
+        (item, index) => (console.log(item), (<Item key={index} post={item} />))
+      )}
+      {/*<Item post={listPost[0]} />*/}
     </div>
   );
 };

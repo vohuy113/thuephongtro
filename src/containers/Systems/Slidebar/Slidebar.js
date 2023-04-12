@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../../api/AuthApi";
 import { Button } from "../../../components";
-import { BiBorderRadius } from "react-icons/bi";
+import { AiOutlineUser } from "react-icons/ai";
+import { Avatar } from 'antd';
 
 const Slidebar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,22 +15,29 @@ const Slidebar = () => {
     <div
       style={{
         width: 200,
-        backgroundColor: "#DBECE3",
+        backgroundColor: "#F0F2F5",
         height: "100%",
         marginTop: "8px",
+        borderRadius: "10px",
+        padding: "10px"
       }}
     >
       <div
         style={{
-          backgroundColor: "#F6EBBE",
+          backgroundColor: "#E6E6FA",
           padding: "4px",
-          BorderRadius: "4px",
+          borderRadius: "4px",
+          marginBottom: "10px",
+          textAlign: "center",
+          fontWeight: "bold",
+          fontSize: "20px"
         }}
       >
+        <Avatar style={{ backgroundColor: '#8A2BE2', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<AiOutlineUser style={{ color: 'white' }} />} />
         {currentUser.email}
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button text={"Nạp tiền"} bgColor={"bg-secondary1"} />
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+        {/* <Button text={"Nạp tiền"} bgColor={"bg-secondary1"} /> */}
         <Button text={"Đăng tin"} bgColor={"bg-secondary2"} />
       </div>
       <div className="slidebar-container">
@@ -47,3 +55,4 @@ const Slidebar = () => {
 };
 
 export default Slidebar;
+

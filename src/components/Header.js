@@ -8,17 +8,9 @@ import { useCallback, useState } from "react";
 import { path } from "../ultils/constant";
 import "./styleBtn.css";
 import menuManage from "../ultils/menuManage";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  setPersistence,
-  browserSessionPersistence,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import app from "../firebase";
-import axios from "axios";
+// import axios from "axios";
 import { User } from "./User/User";
 const Header = () => {
   const navigate = useNavigate();

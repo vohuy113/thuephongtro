@@ -1,16 +1,28 @@
+// import React from "react";
+// import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
+// const Button = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
+//   return (
 import React from "react";
+import { Button } from 'antd';
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
-const Button = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
+const CustomButton = ({ text, textColor, bgColor, IcAfter, onClick, fullWidth }) => {
   return (
-    <button
+    <Button
       type="button"
-      className={`py-2 px-2 ${textColor} ${bgColor} outline-none rounded-md hover:underline flex items-center justify-center gap-1`}
+      className={`${textColor} ${bgColor}`}
       style={fullWidth && { width: "100%" }}
       onClick={onClick}
     >
       <span>{text}</span>
       <span>{IcAfter && <IcAfter />}</span>
-    </button>
+    </Button>
+
+
   );
 };
-export default Button;
+export default CustomButton;
+
+
+//   );
+// };
+// export default Button;

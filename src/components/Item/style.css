@@ -1,31 +1,56 @@
 .item-container {
-  background-color: bisque;
+  background-color: rgb(219, 216, 212);
+  margin: 20px 0;
+  width: 100%;
+  height: 200px;
+  /* border-bottom: 2px solid rgb(0, 0, 0); */
+  box-shadow: inset;
+  border-radius: 12px;
+}
+.item-link {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  /* height: 300px; */
-  width: 900px;
-  margin: 30px;
+  height: 100%;
 }
 .img-container {
-  height: 140px;
-  width: 180px;
-  padding: 20px;
-  background-color: rgb(20, 231, 161);
+  height: 100%;
+  width: 200px;
+  padding: 8px;
+}
+.acreage {
+  font-weight: 500;
+}
+.img-item {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 4px;
 }
 .detail-item-container {
   display: flex;
-  background-color: rgb(145, 236, 206);
+  width: 100%;
+  background-color: rgb(230, 237, 235);
   flex-direction: column;
 }
 .title {
-  color: brown;
-  font-size: 32px;
+  font-size: 28px;
+  font-weight: 600;
+  color: rgb(73, 72, 71);
 }
-.user {
-  width: 5%;
-  height: 5%;
+.attribute-container {
+  margin-top: 8px;
 }
+.acreage {
+  margin: 4px;
+}
+.price {
+  font-weight: 700;
+  color: rgb(192, 49, 49);
+}
+
 .contact-container {
+  margin-top: 30px;
   display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
 }

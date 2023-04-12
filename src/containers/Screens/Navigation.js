@@ -7,11 +7,11 @@ const Navigation = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="flex justify-center items-center h-[40px] bg-secondary1 text-white drop-shadow-2xl"
+      className="flex justify-center items-center h-[40px] bg-secondary1 text-white drop-shadow-2xl rounded-md"
       style={{ width: "100%" }}
     >
       <div
-        className="w-1100 hover:cursor-pointer"
+        className="w-1100 hover:cursor-pointer px-1 mx-1"
         onClick={() => navigate("/", { replace: true })}
       >
         Trang chủ
