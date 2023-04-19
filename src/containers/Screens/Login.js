@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
   setPersistence,
   browserSessionPersistence,
+  updateProfile,
 } from "firebase/auth";
 import app from "../../firebase";
 import { login } from "../../api/AuthApi";
@@ -25,6 +26,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
   const auth = getAuth(app);
 
   const signUp = () => {
@@ -33,6 +35,7 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        updateProfile(user, { displayName: userName })
         alert("success");
         // về trang đăng nhập
         setIsRegister(false);
@@ -86,7 +89,7 @@ const Login = () => {
         {isRegister ? "Đăng ký" : "Đăng nhập"}
       </h3>
       <div className="w-full flex flex-col gap-5">
-        {isRegister && <InputForm label={"Họ Tên"} />}
+        {isRegister && <InputForm label={"Họ Tên"} onChange={(e) => setUserName(e.target.value)} />}
 
         <InputForm label={"Email"} onChange={(e) => setEmail(e.target.value)} />
         <InputForm

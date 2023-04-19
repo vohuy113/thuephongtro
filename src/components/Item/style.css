@@ -6,43 +6,59 @@
   /* border-bottom: 2px solid rgb(0, 0, 0); */
   box-shadow: inset;
   border-radius: 12px;
+  position: relative;
 }
+
 .item-link {
   display: flex;
   flex-direction: row;
   height: 100%;
 }
+
+.phone {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
 .img-container {
   height: 100%;
   width: 200px;
   padding: 8px;
 }
+
 .acreage {
   font-weight: 500;
 }
+
 .img-item {
   height: 100%;
   width: 100%;
   object-fit: cover;
   border-radius: 4px;
 }
+
 .detail-item-container {
   display: flex;
   width: 100%;
   background-color: rgb(230, 237, 235);
   flex-direction: column;
 }
+
 .title {
   font-size: 28px;
   font-weight: 600;
   color: rgb(73, 72, 71);
 }
+
 .attribute-container {
   margin-top: 8px;
 }
+
 .acreage {
   margin: 4px;
 }
+
 .price {
   font-weight: 700;
   color: rgb(192, 49, 49);

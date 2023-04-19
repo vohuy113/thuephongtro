@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./style.css";
+import { AuthContext } from "../../api/AuthApi";
 import { path } from "../../ultils/constant";
 import { Link } from "react-router-dom";
 import { formatVietnameseToString } from "../../ultils/Common/formatVietnameseToString";
 import icons from "../../ultils/icons";
 import { Button, Space } from "antd";
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
+import writeUserData, { getPostIdOnClick, removeLikePostData, writeLikePostToData } from "../../api/addUserToFirebase";
+import { useEffect } from "react";
 const { HiOutlineLocationMarker } = icons;
-const Item = (props) => {
+const Item = ({ post, handleLike }) => {
   const {
     title,
     rating,
@@ -15,18 +19,46 @@ const Item = (props) => {
     price,
     acreage,
     address,
-    status,
     avt,
-    id,
     phone,
-  } = props.post;
+    isLiked,
+    postId,
+    //  handleLike
+  } = post;
+  const { currentUser } = useContext(AuthContext);
+  const [isLike, setIsLike] = useState(false)
+  const [postRef, setPostRef] = useState(null);
+  const handleLikePost = () => {
+    setIsLike(!isLike);
+    console.log(handleLike)
+    handleLike((pre) => !pre);
+  }
+
+
+  //console.log(postRef)
+  useEffect(() => {
+    if (isLike) {
+      setPostRef(writeLikePostToData(currentUser.uid, postId));
+    } else {
+      if (postRef) {
+        removeLikePostData(currentUser.uid, postRef);
+      }
+    }
+    // console.log(isLike)
+  }, [isLike])
+  useEffect(() => {
+    if (isLiked) {
+      setIsLike(true)
+    }
+  }, [isLiked])
+
   return (
-    <div className="item-container bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="hover:drop-shadow-lg item-container bg-white rounded-lg shadow-md overflow-hidden">
       <Link
         className="item-link"
         to={`${path.DETAIL}/${formatVietnameseToString(
           title?.replaceAll("/", "")
-        )}/${id}`}
+        )}/${postId}`}
       >
         <div className="img-container">
           <img className="img-item" src={image} />
@@ -42,16 +74,16 @@ const Item = (props) => {
               <HiOutlineLocationMarker className="mr-2" />
               {address}
             </div>
-            <div className="phone-container">
-              <div className="phone">
-                <Space wrap>
-                  <Button>{phone}</Button>
-                </Space>
-              </div>
-            </div>
+
           </div>
         </div>
       </Link>
+      <div className="phone">
+        <Space wrap>
+          <Button onClick={handleLikePost} icon={isLike ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />} />
+        </Space>
+      </div>
+
     </div>
   );
 };

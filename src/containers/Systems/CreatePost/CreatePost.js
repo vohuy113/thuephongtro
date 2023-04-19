@@ -2,12 +2,9 @@ import React, { useEffect, useState, useTransition, useContext } from "react";
 import Address from "../../../components/Address";
 import Overview from "../../../components/Overview";
 import { storage, db } from "../../../firebase";
-import InputReadOnly from "../../../components/InputReadOnly";
-import SelectAddress from "../../../components/SelectAddress";
-import InputFormV2 from "../../../components/InputFormV2";
 import { AuthContext } from "../../../api/AuthApi";
 import { Form, InputNumber, Input, Button, Space } from "antd";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { doc, setDoc, addDoc, collection, updateDoc } from "firebase/firestore";
 import {
   ref,
   uploadBytes,
@@ -17,6 +14,7 @@ import {
 } from "firebase/storage";
 import { v4 } from "uuid";
 import icons from "../../../ultils/icons";
+import { update } from "firebase/database";
 const { TextArea } = Input;
 const { BsCameraFill, ImBin } = icons;
 
@@ -35,10 +33,20 @@ const CreatePost = () => {
   // });
 
   const writeDocument = async (payload) => {
-    await addDoc(collection(db, "roomify"), {
-      ...payload,
-    });
-    alert("success");
+    try {
+      const postId = await addDoc(collection(db, "roomify"), {
+        ...payload,
+      })
+      await updateDoc(doc(db, 'roomify', `${postId.id}`), {
+        postId: postId.id,
+      });
+      alert("success");
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+
   };
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
@@ -47,12 +55,13 @@ const CreatePost = () => {
   const previewImage = () => {
     if (imageUpload == null) return;
   };
-  console.log(imageUpload)
+  // console.log(imageUpload)
   const uploadImage = async (payload) => {
     if (imageUpload == null) return;
     const folder = Math.floor(Math.random() * (100 - 1 + 1) + 1);
     const uploadPromises = list.map(async (item) => {
       const imageRef = ref(storage, `images/user${folder}/${item.name + v4()}`);
+      console.log(item)
       await uploadBytes(imageRef, item);
       const url = await getDownloadURL(imageRef);
       return url;
@@ -66,11 +75,13 @@ const CreatePost = () => {
       address: payload.address,
       image: res,
       price: payload.price,
-      phone: payload.email,
-      id: `${Math.floor(Math.random() * (100 - 1 + 1) + 1)}`,
-      status: "",
+      // phone: payload.email,
+      // id: `${Math.floor(Math.random() * (100 - 1 + 1) + 1)}`,
       rating: "",
+      userID: currentUser.uid,
+
     };
+    console.log(req)
     writeDocument(req);
     setImageList([]);
     setIsSubmit(false);
@@ -96,7 +107,6 @@ const CreatePost = () => {
   };
   const [form] = Form.useForm();
 
-  // console.log(currentUser.email)
   return (
     <div className="w-full">
       <Form
@@ -114,8 +124,8 @@ const CreatePost = () => {
           image: [],
           price: "",
           phone: '',
-          status: "",
           rating: "",
+          userID: "",
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -155,11 +165,9 @@ const CreatePost = () => {
                     disabled
                   />
                 </Form.Item>
-                <Form.Item label="Điện thoại" name="email">
+                <Form.Item label="Điện thoại">
                   <Input
-                    // name="email"
                     disabled
-                  // value={currentUser.email}
                   />
                 </Form.Item>
 

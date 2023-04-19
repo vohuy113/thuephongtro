@@ -1,4 +1,5 @@
 import React from "react";
+import { Input, Button } from "antd";
 import SearchItem from "../../../components/SearchItem/SearchItem";
 import icons from "../../../ultils/icons";
 import "./style.css";
@@ -21,9 +22,9 @@ const Search = () => {
         <SearchItem
           IconBefore={<HiOutlineLocationMarker />}
           IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
-          text={"Ho Chi Minh"}
+          text={"Địa chỉ"}
           defaultText={"Toàn quốc"}
-          // style={{ index: 1 }}
+        // style={{ index: 1 }}
         />
       </span>
       <span
@@ -34,7 +35,7 @@ const Search = () => {
           IconBefore={<TbReportMoney />}
           IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
           //text={queries.price}
-          text={"3000000"}
+          text={"Giá cả"}
           defaultText={"Chọn giá"}
         />
       </span>
@@ -46,20 +47,22 @@ const Search = () => {
           IconBefore={<RiCrop2Line />}
           IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
           //   text={queries.area}
-          text={"30m2"}
+          text={"Diện tích"}
           defaultText={"Chọn diện tích"}
         />
       </span>
-      <button
-        type="button"
+      <Input placeholder="Nhập từ khóa" className="flex-1" />
+      <Button
+        type="primary"
         //onClick={handleSearch}
         className="outline-none py-2 px-4 flex-1 bg-secondary1 text-[13.3px] flex items-center justify-center gap-2 text-white font-medium"
       >
         <FiSearch />
         Tìm kiếm
-      </button>
+      </Button>
     </div>
   );
 };
 
 export default Search;
+

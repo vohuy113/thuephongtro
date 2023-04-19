@@ -14,7 +14,7 @@ console.log(".....++", auth.currentUser?.email);
 export const User = () => {
   return (
     <Space wrap>
-      <Button type="dashed">{auth.currentUser?.email}</Button>;
+      <Button type="dashed">{auth.currentUser?.displayName}</Button>;
     </Space>
   );
 };

@@ -3,15 +3,14 @@ import logo from "../assets/logo.png";
 import { Button } from ".";
 import icons from "../ultils/icons";
 import { useNavigate, Link } from "react-router-dom";
-import { useHref } from "react-router";
 import { useCallback, useState } from "react";
 import { path } from "../ultils/constant";
 import "./styleBtn.css";
 import menuManage from "../ultils/menuManage";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import app from "../firebase";
-// import axios from "axios";
 import { User } from "./User/User";
+import CustomButton from "./Button";
 const Header = () => {
   const navigate = useNavigate();
 
@@ -37,7 +36,6 @@ const Header = () => {
   };
   // show menu User
   const [isShowMenu, setIsShowMenu] = useState(false);
-
   const LogOut = () => {
     signOut(auth)
       .then(() => {
@@ -84,45 +82,61 @@ const Header = () => {
         {isLogin && (
           <>
             <User />
-            <div className="user_name">
-              <Button
-                text={"Quản lý tài khoản"}
-                textColor="text-white"
-                bgColor="bg-[#33ffff]"
-                //onClick={LogOut}
-                onClick={() => setIsShowManage((pre) => !pre)}
-              />
-              {isShowManage && (
-                <div className="modal_user">
-                  {menuManage.map((item) => (
-                    <Link
-                      className="hover:text-orange-500 text-blue-500 border-b border-gray-200 py-2"
-                      key={item.id}
-                      to={item?.path}
+            <div className="flex flex-row px-2">
+              <div className="mx-2">
+                <Link to={"/he-thong/tin-da-luu"}>
+                  <Button
+                    text={"yêu thích"}
+                    textColor="text-white"
+                    bgColor="bg-rose-500"
+                    IcAfter={icons.AiFillHeart}
+                  />
+                </Link>
+
+              </div>
+              <div className="user_name">
+                <Button
+                  text={"Quản lý tài khoản"}
+                  textColor="text-white"
+                  bgColor="bg-[#33ffff]"
+                  //onClick={LogOut}
+                  onClick={() => setIsShowManage((pre) => !pre)}
+                />
+                {isShowManage && (
+                  <div className="modal_user">
+                    {menuManage.map((item) => (
+                      <Link
+                        className="hover:text-orange-500 text-blue-500 border-b border-gray-300 py-2"
+                        key={item.id}
+                        to={item?.path}
+                      >
+                        {item.text}
+                      </Link>
+                    ))}
+                    <span
+                      className="cursor-pointer hover:text-orange-500 text-blue-500 border-gray-200 py-2"
+                      onClick={() => {
+                        LogOut();
+                        setIsShowManage(false);
+                      }}
                     >
-                      {item.text}
-                    </Link>
-                  ))}
-                  <span
-                    className="cursor-pointer hover:text-orange-500 text-blue-500 border-gray-200 py-2"
-                    onClick={() => {
-                      LogOut();
-                      setIsShowManage(false);
-                    }}
-                  >
-                    Đăng xuất
-                  </span>
-                </div>
-              )}
+                      Đăng xuất
+                    </span>
+                  </div>
+                )}
+              </div>
+
             </div>
           </>
         )}
-        <Button
-          text={"Đăng tin mới"}
-          textColor="text-white"
-          bgColor="bg-secondary2"
-          IcAfter={icons.AiOutlinePlusCircle}
-        />
+        <Link to={"/he-thong/tao-moi-bai-dang"}>
+          <Button
+            text={"Đăng tin mới"}
+            textColor="text-white"
+            bgColor="bg-secondary2"
+            IcAfter={icons.AiOutlinePlusCircle}
+          />
+        </Link>
       </div>
     </div>
   );

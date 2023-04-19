@@ -4,9 +4,9 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../../api/AuthApi";
-import { Button } from "../../../components";
+import { } from "../../../components";
 import { AiOutlineUser } from "react-icons/ai";
-import { Avatar } from 'antd';
+import { Avatar, Menu, Button } from 'antd';
 
 const Slidebar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -34,21 +34,25 @@ const Slidebar = () => {
         }}
       >
         <Avatar style={{ backgroundColor: '#8A2BE2', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<AiOutlineUser style={{ color: 'white' }} />} />
-        {currentUser.email}
+        {currentUser.displayName}
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
         {/* <Button text={"Nạp tiền"} bgColor={"bg-secondary1"} /> */}
-        <Button text={"Đăng tin"} bgColor={"bg-secondary2"} />
+        <Button className="bg-secondary2" style={{ borderRadius: "5px" }}>Đăng tin</Button>
       </div>
       <div className="slidebar-container">
-        {menuManage.map((item) => (
-          <Link className="slidebar-system-item" key={item.id} to={item?.path}>
-            {item.text}
-          </Link>
-        ))}
-        <div className="slidebar-system-item">Bảng giá dịch vụ</div>
-        <div className="slidebar-system-item">Liên hệ</div>
-        <div className="slidebar-system-item">Thoát</div>
+        <Menu mode="inline" theme="light">
+          {menuManage.map((item) => (
+            <Menu.Item key={item.id}>
+              <Link to={item?.path}>
+                {item.text}
+              </Link>
+            </Menu.Item>
+          ))}
+          <Menu.Item><Link to={'tin-da-luu'}></Link>Tin đã lưu</Menu.Item>
+          <Menu.Item>Bảng giá dịch vụ</Menu.Item>
+          <Menu.Item>Thoát</Menu.Item>
+        </Menu>
       </div>
     </div>
   );

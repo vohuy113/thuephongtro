@@ -4,6 +4,7 @@ import { getItemPost } from "../../../api/PostApi";
 import Map from "../../../components/Map";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import "./style.css";
+import { getDocId } from "../../../api/addUserToFirebase";
 const defaultProps = {
   center: {
     lat: 10.99835602,
@@ -12,27 +13,33 @@ const defaultProps = {
   zoom: 11,
 };
 const DetailPost = () => {
-  const { id } = useParams();
+  const { postId } = useParams();
 
   const [coord, setCoord] = useState(null);
 
   const [item, setItem] = useState(() => {
-    return getItemPost(id).then();
+    return getItemPost(postId).then();
   });
   //console.log(item);
+  // useEffect(() => {
+  //   id && getItemPost(id).then(setItem);
+  // // }, [id]);
   useEffect(() => {
-    id && getItemPost(id).then(setItem);
-  }, [id]);
-
-  useEffect(() => {
-    const getCoords = async () => {
-      const results = await geocodeByAddress(item?.address);
-      const latlng = await getLatLng(results[0]);
-      // console.log(latlng);
-      setCoord(latlng);
-    };
-    item && getCoords();
-  }, [id, item]);
+    postId && getItemPost(postId).then(setItem);
+  }, [postId]);
+  //console.log(getItemPost(postId).then())
+  console.log(item)
+  // getDocId()
+  //  het han api
+  // useEffect(() => {
+  //   const getCoords = async () => {
+  //     const results = await geocodeByAddress(item?.address);
+  //     const latlng = await getLatLng(results[0]);
+  //     // console.log(latlng);
+  //     setCoord(latlng);
+  //   };
+  //   item && getCoords();
+  // }, [id, item]);
   return (
     <div>
       {item && (
@@ -57,9 +64,9 @@ const DetailPost = () => {
             <div className="font-extrabold py-1">Thông tin mô tả</div>
             <div className="px-1">{item.description}</div>
           </div>
-          <div className="w-full h-[560px] bg-slate-200 p-2 rounded-md">
+          {/* <div className="w-full h-[560px] bg-slate-200 p-2 rounded-md">
             <Map className="h-full object-cover" coord={coord} />
-          </div>
+          </div> */}
         </div>
       )}
     </div>

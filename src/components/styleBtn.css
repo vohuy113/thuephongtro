@@ -1,10 +1,11 @@
 .user_name {
   position: relative;
 }
+
 .modal_user {
   position: absolute;
   right: 0;
-  background-color: white;
+  background-color: rgb(249, 248, 248);
   box-shadow: black;
   padding: 4px;
   min-width: 200px;
