@@ -24,12 +24,16 @@ const ImgSlide = ({ index }) => {
 function MySlider() {
   const array = [2, 1, 12, 1];
   return (
-    <div>
-      <Carousel autoplay>
-        {array.map((item, index) => (
-          <ImgSlide key={index} index={item} />
-        ))}
-      </Carousel>
+    <div className="px-48">
+      <div className="rounded-xl overflow-hidden">
+        <Carousel autoplay>
+          {array.map((item, index) => (
+            <ImgSlide key={index} index={item} />
+          ))}
+        </Carousel>
+      </div>
+
+
     </div>
   );
 }

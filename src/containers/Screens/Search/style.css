@@ -1,8 +1,0 @@
-.search-container {
-  display: flex;
-  margin: 10px 0;
-  background-color: rgb(237, 173, 76);
-  padding: 10px;
-  justify-content: space-between;
-  /* flex-direction: row; */
-}

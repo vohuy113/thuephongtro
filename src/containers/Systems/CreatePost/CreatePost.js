@@ -146,8 +146,6 @@ const CreatePost = () => {
 
                 />
               </Form.Item>
-
-
               <div className="flex flex-col gap-2">
                 <Form.Item label="Nội dung mô tả" name="description">
                   <TextArea

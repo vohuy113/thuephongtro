@@ -6,10 +6,11 @@ import MySlider from "../../components/MySlider";
 import "./styleHome.css";
 import Item from "../../components/Item/Item";
 import { getListPost } from "../../api/PostApi";
-import Search from "./Search/Search";
+import Search from "./Search";
 import { getListLike } from "../../api/getListLikeOfUser"
 import { AuthContext } from "../../api/AuthApi";
 import { LikePostContext } from "../../api/likePostContext";
+import RecentPosts from "../../components/RecentPosts";
 // import LikePostManager from "../../api/LikePostManager"; // added import
 
 const contentStyle = {
@@ -60,25 +61,25 @@ const Homepage = () => {
   }, [listLike]);
   // console.log(likedPosts)
   return (
-    <div className="home-container items-center justify-between">
-      {/*
-          <Header />
-      <Navigate />
-
-  */}
-      <div className="w-1100 flex flex-col items-center justify-start">
+    <div className="w-[1108px] items-center justify-between">
+      <div className="w-full flex flex-col items-center justify-start">
         <Outlet />
       </div>
-      <Search />
-      <MySlider></MySlider>
-      {listPost.map(
-        (item, index) => (
-          //console.log(item),
-          item.isLiked ?
-            <Item key={index} post={item} handleLike={handleLike} /> :
-            <Item key={index} post={item} handleLike={handleLike} />
-        )
-      )}
+      < Search />
+      <div className="w-full p-2">
+        <MySlider></MySlider>
+      </div>
+      <div className="w-3/4">
+        {listPost.map(
+          (item, index) => (
+            //console.log(item),
+            item.isLiked ?
+              <Item key={index} post={item} handleLike={handleLike} /> :
+              <Item key={index} post={item} handleLike={handleLike} />
+          )
+        )}
+      </div>
+      <RecentPosts />
     </div>
 
   );

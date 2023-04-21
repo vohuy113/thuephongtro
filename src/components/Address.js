@@ -40,7 +40,6 @@ const Address = ({ form }) => {
   const handleChange = async (value, item) => {
     setProvince(item.label)
     const response = await apiGetPublicDistrict(value);
-    //console.log(response);
     setDistricts(response?.data?.results);
   };
 
