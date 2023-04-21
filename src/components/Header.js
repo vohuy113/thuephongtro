@@ -86,9 +86,9 @@ const Header = () => {
               <div className="mx-2">
                 <Link to={"/he-thong/tin-da-luu"}>
                   <Button
-                    text={"yêu thích"}
-                    textColor="text-white"
-                    bgColor="bg-rose-500"
+                    text={"Yêu thích"}
+                    textColor="text-red-600"
+                    bgColor="bg-red-50"
                     IcAfter={icons.AiFillHeart}
                   />
                 </Link>
@@ -98,7 +98,7 @@ const Header = () => {
                 <Button
                   text={"Quản lý tài khoản"}
                   textColor="text-white"
-                  bgColor="bg-[#33ffff]"
+                  bgColor="bg-blue-500"
                   //onClick={LogOut}
                   onClick={() => setIsShowManage((pre) => !pre)}
                 />

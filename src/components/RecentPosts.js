@@ -1,6 +1,6 @@
 import { Avatar, Divider, List, Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
-import InfiniteScroll from ''
+import InfiniteScroll from 'react-infinite-scroll-component'
 const RecentPosts
     = () => {
         const [loading, setLoading] = useState(false);

@@ -11,6 +11,7 @@ import { getListLike } from "../../api/getListLikeOfUser"
 import { AuthContext } from "../../api/AuthApi";
 import { LikePostContext } from "../../api/likePostContext";
 import RecentPosts from "../../components/RecentPosts";
+import { List } from "antd";
 // import LikePostManager from "../../api/LikePostManager"; // added import
 
 const contentStyle = {
@@ -46,8 +47,6 @@ const Homepage = () => {
   }, [isLike]);
   console.log(isLike)
   console.log(listLike)
-  //console.log(listPost)
-  //console.log(likedPosts)
   useEffect(() => {
     let arr = []
     const updatedListPost = listPost.map((post) => {
@@ -69,17 +68,41 @@ const Homepage = () => {
       <div className="w-full p-2">
         <MySlider></MySlider>
       </div>
-      <div className="w-3/4">
-        {listPost.map(
-          (item, index) => (
-            //console.log(item),
-            item.isLiked ?
-              <Item key={index} post={item} handleLike={handleLike} /> :
-              <Item key={index} post={item} handleLike={handleLike} />
-          )
-        )}
+      <div className="w-full flex flex-row justify-around">
+        <div className="w-3/4">
+          {/* {listPost.map(
+            (item, index) => (
+              //console.log(item),
+              item.isLiked ?
+                <Item key={index} post={item} handleLike={handleLike} /> :
+                <Item key={index} post={item} handleLike={handleLike} />
+            )
+          )} */}
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 10,
+            }}
+            dataSource={listPost}
+            renderItem={item => (
+              <Item key={item.postId} post={item} handleLike={handleLike} />
+            )}
+            footer={<div>Antd List footer part</div>}
+          />
+        </div>
+        <div className="w-1/4 m-5 rounded-md overflow-hidden">
+          <div className="bg-slate-100 h-10 mb-1  w-full ">
+            <h2 className="text-center text-slate-800 font-bold text-lg">Tin mới đăng</h2>
+          </div>
+
+          <RecentPosts />
+        </div>
       </div>
-      <RecentPosts />
+
     </div>
 
   );
