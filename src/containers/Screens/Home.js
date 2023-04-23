@@ -5,10 +5,10 @@ import { Outlet } from "react-router";
 import Footer from "../../components/Footer";
 const Home = () => {
   return (
-    <div>
+    <div >
       <Header />
-      <Navigation />
-      <div>
+      {/* <Navigation /> */}
+      <div className="pt-32">
         <Outlet />
       </div>
       <Footer />

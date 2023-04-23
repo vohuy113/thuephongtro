@@ -1,12 +1,20 @@
 .item-container {
-  background-color: rgb(219, 216, 212);
+  background-color: rgb(255, 255, 255);
   margin: 20px 0;
   width: 100%;
   height: 200px;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
   /* border-bottom: 2px solid rgb(0, 0, 0); */
   box-shadow: inset;
   border-radius: 12px;
   position: relative;
+  transition: .24s;
+
+}
+
+.item-container:hover {
+  transition: .12s;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .item-link {
@@ -35,13 +43,13 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .detail-item-container {
   display: flex;
   width: 100%;
-  background-color: rgb(230, 237, 235);
+  background-color: rgb(255, 255, 255);
   flex-direction: column;
 }
 

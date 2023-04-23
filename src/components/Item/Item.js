@@ -53,7 +53,7 @@ const Item = ({ post, handleLike }) => {
   }, [isLiked])
 
   return (
-    <div className="hover:drop-shadow-lg item-container bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="item-container bg-white rounded-lg  overflow-hidden">
       <Link
         className="item-link"
         to={`${path.DETAIL}/${formatVietnameseToString(

@@ -85,7 +85,7 @@ const Homepage = () => {
               onChange: (page) => {
                 console.log(page);
               },
-              pageSize: 10,
+              pageSize: 4,
             }}
             dataSource={listPost}
             renderItem={item => (
