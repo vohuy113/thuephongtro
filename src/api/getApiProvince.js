@@ -23,3 +23,15 @@ export const apiGetPublicDistrict = (provinceId) =>
       reject(error);
     }
   });
+export const apiGetAllVietNasm = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosDefault({
+        method: "get",
+        url: "https://provinces.open-api.vn/api/?depth=3",
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });

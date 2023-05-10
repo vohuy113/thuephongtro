@@ -1,6 +1,7 @@
 import { Avatar, Divider, List, Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { getListPost } from '../api/PostApi';
 const RecentPosts
     = () => {
         const [loading, setLoading] = useState(false);
@@ -10,16 +11,18 @@ const RecentPosts
                 return;
             }
             setLoading(true);
-            fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
-                .then((res) => res.json())
-                .then((body) => {
-                    setData([...data, ...body.results]);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    setLoading(false);
-                });
+            // fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
+            //     .then((res) => res.json())
+            //     .then((body) => {
+            //         setData([...data, ...body.results]);
+            //         setLoading(false);
+            //     })
+            //     .catch(() => {
+            //         setLoading(false);
+            //     });
+            getListPost().then((res) => setData(res))
         };
+        console.log(data)
         useEffect(() => {
             loadMoreData();
         }, []);
@@ -52,13 +55,13 @@ const RecentPosts
                     <List
                         dataSource={data}
                         renderItem={(item) => (
-                            <List.Item key={item.email}>
+                            <List.Item key={item.postId}>
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.picture.large} />}
-                                    title={<a href="https://ant.design">{item.name.last}</a>}
-                                    description={item.email}
+                                    avatar={<Avatar src={item.image[0]} />}
+                                    title={<a href="https://ant.design">{item.title}</a>}
+                                    description={item.price}
                                 />
-                                <div>Content</div>
+                                <div></div>
                             </List.Item>
                         )}
                     />

@@ -22,5 +22,4 @@ const SearchItem = ({
     </div>
   );
 };
-
 export default memo(SearchItem);

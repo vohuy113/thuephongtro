@@ -20,17 +20,6 @@ const { BsCameraFill, ImBin } = icons;
 
 const CreatePost = () => {
   const [isSubmit, setIsSubmit] = useState(false);
-  // const [payload, setPayload] = useState({
-  //   title: "",
-  //   description: "",
-  //   acreage: "",
-  //   address: "",
-  //   image: "",
-  //   price: "",
-  //   phone: "",
-  //   status: "",
-  //   rating: "",
-  // });
 
   const writeDocument = async (payload) => {
     try {
@@ -76,10 +65,9 @@ const CreatePost = () => {
       image: res,
       price: payload.price,
       // phone: payload.email,
-      // id: `${Math.floor(Math.random() * (100 - 1 + 1) + 1)}`,
       rating: "",
       userID: currentUser.uid,
-
+      postingTime: new Date()
     };
     console.log(req)
     writeDocument(req);
@@ -93,7 +81,7 @@ const CreatePost = () => {
     setList((prev) => (imageUpload ? [...prev, imageUpload] : [...prev]));
     console.log(objectUrl);
   }, [imageUpload]);
-  const handleSubmit = () => { };
+  // const handleSubmit = () => { };
   const { currentUser } = useContext(AuthContext);
 
   const onFinish = (values) => {

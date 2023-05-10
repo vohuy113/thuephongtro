@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./style.css";
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { AuthContext } from "../../api/AuthApi";
 import { path } from "../../ultils/constant";
 import { Link } from "react-router-dom";
@@ -9,7 +11,9 @@ import { Button, Space } from "antd";
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import writeUserData, { getPostIdOnClick, removeLikePostData, writeLikePostToData } from "../../api/addUserToFirebase";
 import { useEffect } from "react";
+import dayjs from "dayjs";
 const { HiOutlineLocationMarker } = icons;
+dayjs.extend(relativeTime);
 const Item = ({ post, handleLike }) => {
   const {
     title,
@@ -23,8 +27,9 @@ const Item = ({ post, handleLike }) => {
     phone,
     isLiked,
     postId,
-    //  handleLike
+    postingTime
   } = post;
+  const formattedPostingTime = dayjs(postingTime?.toDate()).fromNow();
   const { currentUser } = useContext(AuthContext);
   const [isLike, setIsLike] = useState(false)
   const [postRef, setPostRef] = useState(null);
@@ -33,8 +38,6 @@ const Item = ({ post, handleLike }) => {
     console.log(handleLike)
     handleLike((pre) => !pre);
   }
-
-
   //console.log(postRef)
   useEffect(() => {
     if (isLike) {
@@ -64,18 +67,16 @@ const Item = ({ post, handleLike }) => {
           <img className="img-item" src={image} />
         </div>
         <div className="detail-item-container p-4">
-          <div className="title font-bold text-lg mb-2">{title}</div>
-          <div className="attribute-container flex justify-between mb-2">
-            <div className="acreage">{acreage} m2</div>
-            <div className="price">{price} tr/tháng</div>
-          </div>
-          <div className="contact-container flex justify-between">
-            <div className="address flex items-center">
+          <div className="title font-bold text-lg mb-1">{title}</div>
+          <div className="font-semibold text-slate-500">{acreage} m²</div>
+          <div className="price mb-9 ">{(price / 1000000).toFixed(1)} tr/tháng</div>
+          <div className="flex justify-between">
+            <div className="flex items-center text-slate-500">
               <HiOutlineLocationMarker className="mr-2" />
               {address}
             </div>
-
           </div>
+          <div className="">{formattedPostingTime}</div>
         </div>
       </Link>
       <div className="phone">

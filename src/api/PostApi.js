@@ -13,9 +13,11 @@ export const getListPost = async () => {
     });
   });
   // console.log(mockPost1);
-
   return mockPost1;
 };
+export const getTenRecentPosts = () => {
+
+}
 export const getItemPost = async (postId) => {
   let itemPost;
   await readDb().then((querySnapshot) => {

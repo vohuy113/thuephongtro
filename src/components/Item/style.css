@@ -63,18 +63,7 @@
   margin-top: 8px;
 }
 
-.acreage {
-  margin: 4px;
-}
-
 .price {
   font-weight: 700;
   color: rgb(192, 49, 49);
-}
-
-.contact-container {
-  margin-top: 30px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 8px;
 }
