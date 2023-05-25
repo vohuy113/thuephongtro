@@ -12,6 +12,7 @@ import app from "../firebase";
 import { User } from "./User/User";
 import CustomButton from "./Button";
 import { Navigation } from "../containers/Screens";
+import { MenuOutlined } from '@ant-design/icons';
 const Header = () => {
   const navigate = useNavigate();
 
@@ -50,9 +51,21 @@ const Header = () => {
   useEffect(() => {
     showUser();
   }, []);
-
+  const [showHeader, setShowHeader] = useState(false)
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 0) {
+        setShowHeader(true)
+        console.log(window.scrollY)
+      } else {
+        setShowHeader(false)
+      }
+    })
+  }, [])
+  console.log(showHeader)
+  let toggleClass = showHeader ? 'fixed' : '';
   return (
-    <div className="fixed z-10 bg-slate-50">
+    <div className={`fixed z-10 bg-slate-50 w-full shadow-lg px-4 `}>
       <div className=" flex items-center justify-between">
         <Link to={"/"}>
           <img
@@ -101,17 +114,19 @@ const Header = () => {
                     text={"Quản lý tài khoản"}
                     textColor="text-white"
                     bgColor="bg-blue-500"
-                    //onClick={LogOut}
+
+                    IcAfter={icons.AiOutlineMenu} // changed IcAfter to icon
                     onClick={() => setIsShowManage((pre) => !pre)}
                   />
                   {isShowManage && (
                     <div className="modal_user">
                       {menuManage.map((item) => (
                         <Link
-                          className="hover:text-orange-500 text-blue-500 border-b border-gray-300 py-2"
+                          className="hover:text-orange-500 flex items-center gap-2 text-blue-500 border-b border-gray-300 py-2"
                           key={item.id}
                           to={item?.path}
                         >
+                          {item?.icon}
                           {item.text}
                         </Link>
                       ))}
@@ -141,7 +156,7 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      <Navigation />
+      {/* <Navigation /> */}
     </div>
 
   );

@@ -45,7 +45,7 @@ const Address = ({ form }) => {
 
   const handleChangeDic = async (value, item) => {
     console.log(province + item.label)
-    form.setFieldValue("address", province + " " + item.label)
+    form.setFieldValue("address", item.label + " " + province)
   };
 
   return (

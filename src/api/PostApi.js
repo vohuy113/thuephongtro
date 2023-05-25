@@ -24,7 +24,6 @@ export const getItemPost = async (postId) => {
     querySnapshot.forEach((doc) => {
       if (doc.data().postId === postId) {
         itemPost = doc.data();
-        // console.log(itemPost);
       }
     });
   });

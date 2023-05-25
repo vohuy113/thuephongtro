@@ -11,6 +11,9 @@ import LikePostManager from "./containers/Systems/LikePostManager";
 import ItemLikePost from "./components/ItemLikePost";
 import { LikePostContext } from "./api/likePostContext";
 import { useState } from "react";
+import SearchResult from "./containers/Screens/SearchResult";
+import BackHeadPage from "./components/BackHeadPage";
+import Message from "./components/Message";
 // import Homepage from "./containers/Screens/Homepage";
 function App() {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -19,7 +22,7 @@ function App() {
     <AuthProvider>
       <LikePostContext.Provider value={[likedPosts, setLikedPosts]}>
 
-        <div className="justify-center flex bg-slate-50">
+        <div className="justify-center flex w-full bg-slate-50">
           <Routes>
             <Route path={path.HOME} element={<Home />}>
               <Route path="*" element={<Homepage />} />
@@ -28,6 +31,7 @@ function App() {
                 path={path.DETAIL_POST_TITLE_POSTID}
                 element={<DetailPost />}
               />
+              {/* <Route path={path.SEARCH_RESULT} element={<SearchResult />} /> */}
             </Route>
             <Route path={path.SYSTEM} element={<System />}>
               <Route path={path.CREATE_POST} element={<CreatePost />} />
@@ -37,6 +41,8 @@ function App() {
             </Route>
           </Routes>
         </div>
+        <BackHeadPage />
+        <Message />
       </LikePostContext.Provider>
 
     </AuthProvider>

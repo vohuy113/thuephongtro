@@ -11,7 +11,7 @@ const ItemLikePost = (props) => {
                 <p style={{ color: '#666666' }}>25m2: {acreage}</p>
                 <p style={{ color: '#666666' }}>2: {price}</p>
             </div>
-            <Button style={{ marginTop: '90px', marginRight: '12px', backgroundColor: '#1890FF', color: '#FFFFFF' }}>Chat</Button>
+            {/* <Button style={{ marginTop: '90px', marginRight: '12px', backgroundColor: '#1890FF', color: '#FFFFFF' }}>Chat</Button> */}
         </div>
     )
 }

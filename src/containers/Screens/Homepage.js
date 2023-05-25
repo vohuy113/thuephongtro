@@ -11,7 +11,9 @@ import { getListLike } from "../../api/getListLikeOfUser"
 import { AuthContext } from "../../api/AuthApi";
 import { LikePostContext } from "../../api/likePostContext";
 import RecentPosts from "../../components/RecentPosts";
-import { List } from "antd";
+import { Button, List } from "antd";
+import FooterSlider from "../../components/FooterSlider";
+import FindByTag from "../../components/FindByTag";
 // import LikePostManager from "../../api/LikePostManager"; // added import
 
 const contentStyle = {
@@ -28,6 +30,17 @@ const Homepage = () => {
   const [listLike, setListLike] = useState([]);
   const [likedPosts, setLikedPosts] = useContext(LikePostContext)
   const [isLike, setIsLike] = useState(false);
+
+  // truyen prop
+
+  const [message, setMessage] = useState('')
+
+  const callbackFunction = (childData) => {
+    setMessage(childData)
+    console.log('re_render')
+  }
+
+  const [listToFilter, setListToFilter] = useState([])
   const handleLike = (postId) => {
     console.log(postId)
     setIsLike(postId);
@@ -40,13 +53,31 @@ const Homepage = () => {
       ]).then((values) => {
         console.log(values)
         setListPost(values[0]);
+        setListToFilter(values[0]);
+        console.log(listToFilter)
         setListLike(Object.keys?.(values[1]));
       })
     }
     fetchData();
   }, [isLike]);
-  console.log(isLike)
-  console.log(listLike)
+
+  useEffect(() => {
+    const filter = async () => {
+      let searchByAddress
+      const searchByPrice = await listToFilter?.filter(post => post.price >= (message[0]) * 1000000 && post.price <= message[1] * 1000000);
+      // const searchByMessage = searchByPrice?.filter(post => post.acreage.toLowerCase().includes(message[2].toLowerCase()) || post.description.toLowerCase().includes(message[3].toLowerCase()));
+      if (message[4]) {
+        searchByAddress = await searchByPrice?.filter(post => post.address.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_")
+          .includes(message[4][0].toLowerCase()))
+      }
+      //console.log(searchByPrice[0].address.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_"));
+      const searchByMessage = await searchByAddress ? searchByAddress : searchByPrice.filter(post => post.acreage >= message[2] && post.acreage <= message[3]);
+
+      setListPost(searchByMessage);
+    }
+    filter();
+  }, [message])
+  console.log(message)
   useEffect(() => {
     let arr = []
     const updatedListPost = listPost.map((post) => {
@@ -55,29 +86,24 @@ const Homepage = () => {
       return { ...post, isLiked };
     });
     setListPost(updatedListPost);
-    setLikedPosts(arr); // set likedPosts state
+    setLikedPosts(arr);
+    console.log(arr) // set likedPosts state
     //setLikedPosts(updatedListPost.filter((post) => post.isLiked))
   }, [listLike]);
-  // console.log(likedPosts)
+  //console.log(inputValue);
   return (
     <div className="w-[1108px] items-center justify-between">
       <div className="w-full flex flex-col items-center justify-start">
         <Outlet />
       </div>
-      < Search />
+      < Search parentCallback={callbackFunction} />
+      <p>{message}</p>
       <div className="w-full p-2">
         <MySlider></MySlider>
+
       </div>
       <div className="w-full flex flex-row justify-around">
         <div className="w-3/4">
-          {/* {listPost.map(
-            (item, index) => (
-              //console.log(item),
-              item.isLiked ?
-                <Item key={index} post={item} handleLike={handleLike} /> :
-                <Item key={index} post={item} handleLike={handleLike} />
-            )
-          )} */}
           <List
             itemLayout="vertical"
             size="large"
@@ -94,8 +120,10 @@ const Homepage = () => {
             footer={<div>Antd List footer part</div>}
           />
         </div>
-        <div className="w-1/4 m-5 rounded-md overflow-hidden">
-          <div className="bg-slate-100 h-10 mb-1  w-full ">
+        <div className="w-1/4 ml-5 mt-5 rounded-md overflow-hidden">
+          <FindByTag />
+
+          <div className="bg-slate-100 mt-3 h-10 mb-1  w-full ">
             <h2 className="text-center text-slate-800 font-bold text-lg">Tin mới đăng</h2>
           </div>
 

@@ -39,15 +39,15 @@ const DetailPost = () => {
   // getDocId()
   console.log(item?.image?.length ?? 0);
   //  het han api
-  // useEffect(() => {
-  //   const getCoords = async () => {
-  //     const results = await geocodeByAddress(item?.address);
-  //     const latlng = await getLatLng(results[0]);
-  //     // console.log(latlng);
-  //     setCoord(latlng);
-  //   };
-  //   item && getCoords();
-  // }, [id, item]);
+  useEffect(() => {
+    const getCoords = async () => {
+      const results = await geocodeByAddress(item?.address);
+      const latlng = await getLatLng(results[0]);
+      // console.log(latlng);
+      setCoord(latlng);
+    };
+    item && getCoords();
+  }, [item]);
   return (
     <div className="w-[1108px]">
       <div className="py-2">
@@ -99,9 +99,9 @@ const DetailPost = () => {
               <div className="font-extrabold py-1">Thông tin mô tả</div>
               <div className="px-1">{item.description}</div>
             </Card>
-            {/* <div className="w-full h-[560px] bg-slate-200 p-2 rounded-md">
-            <Map className="h-full object-cover" coord={coord} />
-          </div> */}
+            <div className="w-full h-[560px] bg-slate-200 p-2 rounded-md">
+              <Map className="h-full object-cover" coord={coord} />
+            </div>
           </div>
           <div className="flex flex-col">
             <Card className="w-[316px] h-[120px] bg-white m-2 rounded-md">

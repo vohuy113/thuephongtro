@@ -3,7 +3,7 @@ import { QRCode } from 'antd'
 import google_play from '../../src/assets/google_play.png'
 const Footer = () => {
     return (
-        <div className='flex flex-row justify-between'>
+        <div className='flex flex-row justify-between mt-60'>
             <div>
                 <div className='font-bold'>TÌM PHÒNG TRỌ GIÁ TỐT TRÊN ROOMIFY</div>
                 <QRCode value="https://example.com" />

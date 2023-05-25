@@ -1,4 +1,4 @@
-import { AiOutlinePlusCircle, AiOutlineLogout, AiFillHeart } from "react-icons/ai";
+import { AiOutlinePlusCircle, AiOutlineLogout, AiFillHeart, AiOutlineMenu, AiOutlineArrowUp } from "react-icons/ai";
 import { GrNext, GrStar, GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import {
   BsChevronRight,
@@ -15,6 +15,7 @@ import { ImPencil2, ImBin } from "react-icons/im";
 import { BiUserPin } from "react-icons/bi";
 
 const icons = {
+  AiOutlineMenu,
   AiFillHeart,
   AiOutlinePlusCircle,
   GrNext,
@@ -37,6 +38,7 @@ const icons = {
   BsChevronDown,
   ImBin,
   BsCameraFill,
+  AiOutlineArrowUp,
 };
 
 export default icons;

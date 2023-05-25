@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { Input, Button } from "antd";
 import SearchItem from "../../components/SearchItem/SearchItem";
 import icons from "../../ultils/icons";
@@ -6,8 +6,12 @@ import { Modal, Slider, List, Cascader, Form } from "antd";
 import { apiGetAllVietNasm, apiGetPublicDistrict, apiGetPublicProvince } from "../../api/getApiProvince";
 import { RightOutlined } from "@ant-design/icons"
 import { prettyDOM } from "@testing-library/react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { BsX } from "react-icons/bs";
+import { getDocs, collection, query, where, getDoc, and } from "firebase/firestore";
+import { db } from "../../firebase";
+import { getListPost } from "../../api/PostApi";
+import { AiFillAccountBook } from "react-icons/ai";
 const {
   BsChevronRight,
   HiOutlineLocationMarker,
@@ -16,7 +20,7 @@ const {
   MdOutlineHouseSiding,
   FiSearch,
 } = icons;
-const Search = () => {
+const Search = (props) => {
   // const [content, setContent] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
@@ -27,16 +31,27 @@ const Search = () => {
     setModalType(type);
   };
   const [searchParams, setSearchParams] = useSearchParams()
-  const handleSearch = () => {
-    setSearchParams({ ...searchParams, price: `${inputValue[0]}-${inputValue[1]}` })
-    // if (inputValueDt) setSearchParams({ ...searchParams, dt: `${inputValueDt[0]}-${inputValueDt[1]}` })
-  }
 
   const [inputValue, setInputValue] = useState([0, 30])
   const [inputValueDt, setInputValueDt] = useState([0, 90])
-  // useEffect(() => {
-  //   setSearchParams({ ...searchParams, price: `${inputValue[0]}-${inputValue[1]}`, dt: `${inputValueDt[0]}-${inputValueDt[1]}` })
-  // }, [inputValue, inputValueDt])
+
+  // send data:
+
+  const sendData = (q) => {
+    props.parentCallback(q);
+  }
+
+
+  const handleSearch = () => {
+    const q = inputValue.concat(inputValueDt);
+    if (value) {
+      q.push(value); // add value to the end of the array
+    }
+
+    console.log('search');
+    sendData(q);
+  }
+
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -44,8 +59,6 @@ const Search = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  console.log(inputValue)
-  console.log(inputValueDt)
   const onAfterChange = (value) => {
     setInputValue(value)
     console.log('onAfterChange: ', value);
@@ -59,93 +72,48 @@ const Search = () => {
   useEffect(() => {
     const fetchPublicProvince = async () => {
       const response = await apiGetAllVietNasm()
+      console.log(response?.data)
       setProvinces(response?.data);
     };
     fetchPublicProvince();
-    console.log('alo')
   }, []);
-  //const [options, setOptions] = useState(provinces);
-  //console.log(options)
+  const [value, setValue] = useState("")
+  const onChange = async (label) => { setValue(label) }
+  console.log(value);
   const renderModalContent = () => {
     switch (modalType) {
       case "location":
         {
-          // return (
-          //   <List style={{ maxHeight: '400px', overflowY: 'scroll' }}
-          //     size="small"
-          //     dataSource={[{ province_name: "Tất cả" }, ...provinces]}
-          //     renderItem={(item) => (
-          //       <List.Item>
-          //         <span>{item.province_name}</span>
-          //         <RightOutlined />
-          //       </List.Item>
-          //     )}
-          //   />
-          // );
           //const options = provinces;
-          //console.log(options)
-          // const options = [
-          //   {
-          //     value: 'zhejiang',
-          //     label: 'Zhejiang',
-          //     children: [
-          //       {
-          //         value: 'hangzhou',
-          //         label: 'Hanzhou',
-          //         children: [
-          //           {
-          //             value: 'xihu',
-          //             label: 'West Lake',
-          //           },
-          //         ],
-          //       },
-          //     ],
-          //   },
-          //   {
-          //     value: 'jiangsu',
-          //     label: 'Jiangsu',
-          //     children: [
-          //       {
-          //         value: 'nanjing',
-          //         label: 'Nanjing',
-          //         children: [
-          //           {
-          //             value: 'zhonghuamen',
-          //             label: 'Zhong Hua Men',
-          //           },
-          //         ],
-          //       },
-          //     ],
-          //   },
-          // ];
-          const onChange = async (value) => {
-            console.log(value);
-            // const provinceIndex = provinces.findIndex((province) => province.province_id == value);
-            // console.log(provinceIndex);
-            // let data = await apiGetPublicDistrict(value)
-            // // provinces[provinceIndex].item = await data?.data?.results
-            // provinces[provinceIndex].item = await data?.data?.results;
-            // setProvinces((pre) => {
-            //   const newProvinces = [...pre];
-            //   newProvinces[provinceIndex] = provinces[provinceIndex];
-            //   return newProvinces;
-            // });
 
-            //options[provinceIndex].item = data?.data?.results
-            //  console.log(options[provinceIndex].item)
-            //setOptions((prev) => [...prev, options[provinceIndex].item]);
-          };
+          // const onChange = async (value) => {
+          //   console.log(value);
+          //   // const provinceIndex = provinces.findIndex((province) => province.province_id == value);
+          //   // console.log(provinceIndex);
+          //   // let data = await apiGetPublicDistrict(value)
+          //   // // provinces[provinceIndex].item = await data?.data?.results
+          //   // provinces[provinceIndex].item = await data?.data?.results;
+          //   // setProvinces((pre) => {
+          //   //   const newProvinces = [...pre];
+          //   //   newProvinces[provinceIndex] = provinces[provinceIndex];
+          //   //   return newProvinces;
+          //   // });
 
-          return (
-            <Cascader fieldNames={{
-              label: 'name',
-              value: 'codename',
-              children: 'districts',
+          //   //options[provinceIndex].item = data?.data?.results
+          //   //  console.log(options[provinceIndex].item)
+          //   //setOptions((prev) => [...prev, options[provinceIndex].item]);
+          // };
 
-            }} options={provinces} onChange={onChange} changeOnSelect
-            />
+          // return (
+          //   // <Cascader fieldNames={{
+          //   //   label: 'name',
+          //   //   value: 'codename',
+          //   //   children: 'districts',
 
-          )
+          //   // }} options={provinces} onChange={onChange} changeOnSelect
+          //   // />
+
+          // )
         }
       case "price":
         return (
@@ -191,22 +159,33 @@ const Search = () => {
     <>
       <Form onFinish={handleSearch}>
         <Form.Item name="location">
-          < div className="grid grid-flow-col auto-cols-auto bg-sky-400 p-1 w-full my-2 rounded-lg" >
-            <span
+          < div className="flex flex-row bg-sky-400 p-1 w-full my-2 rounded-lg" >
+            {/* <span
               onClick={() => showModal("location")}
-              className="cursor-pointer m-1"
+              className="cursor-pointer m-1 w-1/4"
             >
               <SearchItem
                 IconBefore={<HiOutlineLocationMarker />}
                 IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
-                text={"Địa chỉ"}
+                // text={`${value[1]}/${value[0]}`}
                 defaultText={"Toàn quốc"}
               // style={{ index: 1 }}
+              />
+            </span> */}
+            <span className="m-1 w-1/4 cursor-pointer overflow-hidden">
+              <Cascader showSearch fieldNames={{
+                label: 'name',
+                value: 'codename',
+                children: 'districts',
+
+              }} options={provinces} onChange={onChange} changeOnSelect
+                style={{ height: '100%' }}
+                placeholder="Toàn quốc"
               />
             </span>
             <span
               onClick={() => showModal("price")}
-              className="cursor-pointer m-1"
+              className="cursor-pointer m-1 w-1/4"
             >
               <SearchItem
                 IconBefore={<TbReportMoney />}
@@ -219,7 +198,7 @@ const Search = () => {
             </span>
             <span
               onClick={() => showModal("area")}
-              className="cursor-pointer m-1"
+              className="cursor-pointer m-1 w-1/4"
             >
               <SearchItem
                 IconBefore={<RiCrop2Line />}
@@ -230,7 +209,8 @@ const Search = () => {
               />
             </span>
             {/* <Input placeholder="Nhập từ khóa" className="flex-1 m-1" /> */}
-            <span className="m-1">
+            <span className="m-1 w-1/4">
+              {/* <Link to={"/ket-qua-tim-kiem"} > */}
               <Button
                 // type="primary"
                 htmlType="submit"
@@ -239,8 +219,11 @@ const Search = () => {
                 <FiSearch />
                 Tìm kiếm
               </Button>
+              {/* </Link> */}
+
             </span>
           </div >
+
         </Form.Item>
       </Form>
 
@@ -258,5 +241,5 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default memo(Search);
 

@@ -10,7 +10,7 @@ export const path = {
   CREATE_POST: "tao-moi-bai-dang",
   INFOR_USER: "thong-tin-tai-khoan",
   MANAGE_POST: "quan-ly-bai-dang",
-  MANAGE_LIKE_POST: "tin-da-luu"
-
+  MANAGE_LIKE_POST: "tin-da-luu",
+  SEARCH_RESULT: 'ket-qua-tim-kiem',
   // DETAIL_ALL: "chi-tiet/*",
 };
