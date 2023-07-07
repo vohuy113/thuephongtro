@@ -37,7 +37,7 @@ const Homepage = () => {
 
   const callbackFunction = (childData) => {
     setMessage(childData)
-    console.log('re_render')
+    // console.log('re_render')
   }
 
   const [listToFilter, setListToFilter] = useState([])
@@ -51,24 +51,25 @@ const Homepage = () => {
         getListPost(),
         getListLike(currentUser.uid),
       ]).then((values) => {
-        console.log(values)
+        // console.log(values)
         setListPost(values[0]);
         setListToFilter(values[0]);
-        console.log(listToFilter)
+        // console.log(listToFilter)
         setListLike(Object.keys?.(values[1]));
       })
     }
     fetchData();
   }, [isLike]);
-
+  console.log(listLike);
   useEffect(() => {
     const filter = async () => {
       let searchByAddress
       const searchByPrice = await listToFilter?.filter(post => post.price >= (message[0]) * 1000000 && post.price <= message[1] * 1000000);
       // const searchByMessage = searchByPrice?.filter(post => post.acreage.toLowerCase().includes(message[2].toLowerCase()) || post.description.toLowerCase().includes(message[3].toLowerCase()));
       if (message[4]) {
+        let filterKey = message[4][1] || message[4][0];
         searchByAddress = await searchByPrice?.filter(post => post.address.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_")
-          .includes(message[4][0].toLowerCase()))
+          .includes(filterKey.toLowerCase()))
       }
       //console.log(searchByPrice[0].address.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_"));
       const searchByMessage = await searchByAddress ? searchByAddress : searchByPrice.filter(post => post.acreage >= message[2] && post.acreage <= message[3]);
@@ -87,17 +88,17 @@ const Homepage = () => {
     });
     setListPost(updatedListPost);
     setLikedPosts(arr);
-    console.log(arr) // set likedPosts state
+    // console.log(arr) // set likedPosts state
     //setLikedPosts(updatedListPost.filter((post) => post.isLiked))
   }, [listLike]);
-  //console.log(inputValue);
+  console.log(currentUser);
   return (
     <div className="w-[1108px] items-center justify-between">
       <div className="w-full flex flex-col items-center justify-start">
         <Outlet />
       </div>
       < Search parentCallback={callbackFunction} />
-      <p>{message}</p>
+      {/* <p>{message}</p> */}
       <div className="w-full p-2">
         <MySlider></MySlider>
 
@@ -130,7 +131,6 @@ const Homepage = () => {
           <RecentPosts />
         </div>
       </div>
-
     </div>
 
   );

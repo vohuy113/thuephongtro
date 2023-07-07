@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SelectAddress from "./SelectAddress";
 import {
   apiGetPublicDistrict,
   apiGetPublicProvince,
 } from "../api/getApiProvince";
 import { Form, InputNumber, Input, Button, Select } from "antd";
-
+import { AiOutlineCheck } from "react-icons/ai";
 import InputReadOnly from "./InputReadOnly";
 const Address = ({ form }) => {
   const [provinces, setProvinces] = useState([]);
@@ -45,9 +45,19 @@ const Address = ({ form }) => {
 
   const handleChangeDic = async (value, item) => {
     console.log(province + item.label)
-    form.setFieldValue("address", item.label + " " + province)
+    form.setFieldValue("address", item.label + ", " + province)
   };
-
+  const [houseNumber, setHouseNumber] = useState("");
+  const handleChangeHouseNumber = (event) => {
+    const value = event.target.value;
+    setHouseNumber(value);
+  };
+  const [isDisable, setIsDisable] = useState(false)
+  const handleCheck = () => {
+    console.log(form.getFieldValue("address"))
+    setIsDisable(true)
+    form.setFieldValue("address", houseNumber + ", " + form.getFieldValue("address"))
+  }
   return (
     <div>
       <Form.Item name="province" label="Địa chỉ cho thuê">
@@ -58,20 +68,28 @@ const Address = ({ form }) => {
           options={itemsProvince}
         />
       </Form.Item>
-      <Form.Item name="dictrict">
+      <Form.Item name="district">
         <Select
           defaultValue="Chọn huyện"
           style={{ width: 250 }}
           onChange={handleChangeDic}
           options={itemsDictrict}
         />
+        <Form.Item className="mt-5" label="Số nhà, tên đường" name="houseNumber">
+          <div style={{ display: 'flex' }}>
+            <Input disabled={isDisable}
+              onChange={handleChangeHouseNumber} style={{ marginRight: '8px' }} />
+            <Button onClick={handleCheck} disabled={isDisable}>
+              <AiOutlineCheck />
+            </Button>
+          </div>
+        </Form.Item>
       </Form.Item>
       <Form.Item name="address" label="Địa chỉ chính xác">
         <Input
           disabled
         />
       </Form.Item>
-
     </div>
   );
 };

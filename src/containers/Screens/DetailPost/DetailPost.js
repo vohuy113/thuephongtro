@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { getItemPost } from "../../../api/PostApi";
 import Map from "../../../components/Map";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
+import { MessageOutlined, PhoneOutlined } from "@ant-design/icons"
 import "./style.css";
 import { getDocId } from "../../../api/addUserToFirebase";
-import { Card, Carousel, Breadcrumb } from 'antd';
+import { Card, Carousel, Breadcrumb, Button } from 'antd';
+import app, { database } from "../../../firebase";
+import { get, ref, child } from "firebase/database"
+import { async } from "@firebase/util";
+import FooterSlider from "../../../components/FooterSlider";
+import Chat from "../../../components/Chat";
 const defaultProps = {
   center: {
     lat: 10.99835602,
@@ -21,6 +27,8 @@ const contentStyle = {
   background: '#364d79',
 };
 const DetailPost = () => {
+  const navigate = useNavigate();
+
   const { postId } = useParams();
 
   const [coord, setCoord] = useState(null);
@@ -48,6 +56,32 @@ const DetailPost = () => {
     };
     item && getCoords();
   }, [item]);
+  const [userPost, setUserPost] = useState('')
+  useEffect(() => {
+    const getUserPosted = async () => {
+      const dbRef = ref(database);
+      await console.log(item)
+      await get(child(dbRef, `Users/${item.userID}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          setUserPost(snapshot.val())
+        } else {
+          console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+    getUserPosted();
+  }, [item])
+  console.log(userPost)
+  const navigateChat = () => {
+    navigate(`/he-thong/tin-nhan/${item.postId}`, { replace: true })
+  }
+  const [showChat, setShowChat] = useState(false);
+  const handleClick = () => {
+    setShowChat(true);
+  }
   return (
     <div className="w-[1108px]">
       <div className="py-2">
@@ -104,26 +138,31 @@ const DetailPost = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <Card className="w-[316px] h-[120px] bg-white m-2 rounded-md">
+            <Card className="w-[316px] h-[180px] bg-white m-2 rounded-md">
+              <div className="font-bold text-xl mb-3 text-slate-700">Người đăng</div>
               <div className="flex flex-row">
-                <img className="w-10 h-10" src="https://phongtro123.com/images/default-user.png" />
+                <img className="w-10 h-10 rounded-md" src={userPost.avatar} />
                 <div className="flex flex-col mx-3 text-slate-700	">
-                  <div className="text-lg font-bold" >Tên</div>
+                  <div className="text-lg font-bold" >{userPost.fullName || userPost.fullname}</div>
                   <div>Trạng thái</div>
                   <div>Hoạt động bao nhiêu phút trước</div>
                 </div>
               </div>
             </Card>
-            <Card className="w-[316px] h-[220px] bg-white mx-2 rounded-md">
+            <Card className="w-[316px] h-[200px] bg-white mx-2 rounded-md">
               <div className="text-xl font-bold mx-3 text-slate-700	">
-                Liên hệ với người bán
+                Liên hệ chủ trọ
               </div>
-
+              <div className="mt-3 flex flex-col justify-center gap-y-3.5">
+                <Button icon={<MessageOutlined />} onClick={handleClick}> Chat với người bán </Button>
+                <Button icon={<PhoneOutlined />} onClick={navigateChat}>0977636945</Button>
+              </div>
             </Card>
+            {showChat && <Chat />}
           </div>
-
         </div>
       )}
+      <FooterSlider />
     </div>
   );
 };

@@ -9,7 +9,7 @@ const BackHeadPage = () => {
 
             if (window.scrollY > 200) {
                 setBackToTopButton(true)
-                console.log(window.scrollY)
+                // console.log(window.scrollY)
             } else {
                 setBackToTopButton(false);
             }
@@ -27,7 +27,7 @@ const BackHeadPage = () => {
         <div>
             {backToTopButton && (
 
-                <div onClick={scrollUp} className='fixed bottom-1/2 right-10 w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-sky-600 hover:shadow-lg duration-300'>
+                <div onClick={scrollUp} className='fixed bottom-1/2 right-10 w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-[#019594] hover:shadow-lg duration-300'>
                     <AiOutlineArrowUp />
                 </div>
 

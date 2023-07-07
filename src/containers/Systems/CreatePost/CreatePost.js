@@ -64,7 +64,7 @@ const CreatePost = () => {
       address: payload.address,
       image: res,
       price: payload.price,
-      // phone: payload.email,
+      phone: payload.phone,
       rating: "",
       userID: currentUser.uid,
       postingTime: new Date()
@@ -151,9 +151,9 @@ const CreatePost = () => {
                     disabled
                   />
                 </Form.Item>
-                <Form.Item label="Điện thoại">
+                <Form.Item label="Điện thoại" name="phone">
                   <Input
-                    disabled
+
                   />
                 </Form.Item>
 

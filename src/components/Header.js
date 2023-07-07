@@ -63,15 +63,16 @@ const Header = () => {
     })
   }, [])
   console.log(showHeader)
-  let toggleClass = showHeader ? 'fixed' : '';
+  let toggleClass = showHeader ? '' : '';
+  let toggleClass1 = showHeader ? 'scale-75 transition duration-500 ease-in-out' : 'transition duration-500 ease-in-out';
   return (
-    <div className={`fixed z-10 bg-slate-50 w-full shadow-lg px-4 `}>
-      <div className=" flex items-center justify-between">
+    <div className={`${toggleClass} transition duration-700 hover:pb-4 fixed z-10 bg-[#019594] w-full shadow-lg px-4`}>
+      <div className={`${showHeader ? '-translate-y-2 transition duration-500 ease-in-out' : 'transition duration-500 ease-in-out'} flex items-center justify-between`}>
         <Link to={"/"}>
           <img
             src={logo}
             alt="logo"
-            className="w-[240]px h-[70px] object-contain"
+            className={`${toggleClass1} h-[85px] object-contain ml-5`}
           />
         </Link>
         <div className="flex items-center gap-1">
@@ -98,7 +99,7 @@ const Header = () => {
             <>
               <User />
               <div className="flex flex-row px-2">
-                <div className="mx-2">
+                <div className={` mx-2`}>
                   <Link to={"/he-thong/tin-da-luu"}>
                     <Button
                       text={"Yêu thích"}
@@ -113,7 +114,7 @@ const Header = () => {
                   <Button
                     text={"Quản lý tài khoản"}
                     textColor="text-white"
-                    bgColor="bg-blue-500"
+                    bgColor="bg-[#d05031]"
 
                     IcAfter={icons.AiOutlineMenu} // changed IcAfter to icon
                     onClick={() => setIsShowManage((pre) => !pre)}

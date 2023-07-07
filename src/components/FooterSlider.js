@@ -37,7 +37,7 @@ const FooterSlider = () => {
     }, [])
     console.log(similarPosts)
     return (
-        <div className='w-[1100px] h-[240px] shadow-lg bg-white relative'>
+        <div className='w-[1100px] h-[240px] shadow-lg bg-white relative mt-5'>
             <Button className='absolute left-[-18px] z-10 top-24 rounded-full w-10 h-10 bg-white shadow-md flex justify-center items-center'
                 onClick={handleGoToSlidePrev}><LeftOutlined className='leading-10' /></Button>
 

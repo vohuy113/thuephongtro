@@ -10,13 +10,15 @@ const Home = () => {
   return (
     <div className="w-full" >
       <Header />
-      <div className="pt-20 flex items-center justify-center">
+      <div className="pt-28 flex items-center justify-center">
         <Outlet />
       </div>
-      <div className="flex flex-col">
-        <FooterSlider />
+      {/* <div className="flex flex-col"> */}
+      {/* <FooterSlider /> */}
+      <div className="flex justify-center items-center px-10">
         <Footer />
       </div>
+      {/* </div> */}
     </div>
   );
 };

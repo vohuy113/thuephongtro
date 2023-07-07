@@ -1,9 +1,11 @@
 // import { async } from "@firebase/util";
 import { doc } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, createContext, useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import readDb from "../read_db_firebase";
 import { database } from "../firebase";
+
+export const listPostContext = createContext();
 
 export const getListPost = async () => {
   let mockPost1 = [];
@@ -15,6 +17,21 @@ export const getListPost = async () => {
   // console.log(mockPost1);
   return mockPost1;
 };
+export const ListPostedProvider = ({ children }) => {
+  const [list, setList] = useState(null);
+  useEffect(() => {
+    const fetchList = async () => {
+      const postList = await getListPost(); // Lấy danh sách bài viết từ getListPost
+      setList(postList); // Gán danh sách bài viết cho state
+    };
+    fetchList();
+  }, [])
+  return (
+    <listPostContext.Provider value={{ list }}>
+      {children}
+    </listPostContext.Provider>
+  )
+}
 export const getTenRecentPosts = () => {
 
 }

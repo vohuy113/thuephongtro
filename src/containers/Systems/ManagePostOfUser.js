@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { getListPost } from '../../api/PostApi';
 import { AuthContext } from '../../api/AuthApi';
-import { Table, Button, Popconfirm } from 'antd';
+import { Table, Button, Popconfirm, Image } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { ref, set, update } from 'firebase/database';
+import { database } from '../../firebase';
+// import relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from "dayjs";
+
 
 const ManagePostOfUser = () => {
     const { currentUser } = useContext(AuthContext);
@@ -11,12 +16,18 @@ const ManagePostOfUser = () => {
     }
     const [listPost, setListPost] = useState([]);
     useEffect(() => {
+        const listPostedRef = ref(database, `Users/${currentUser.uid}/listPosted`)
         getListPost().then((res) => {
             res.forEach((item) => {
-                if (item.userID == currentUser.uid)
+                if (item.userID == currentUser.uid) {
+                    update(listPostedRef, {
+                        [item.postId]: 'true'
+                    })
                     setListPost((prev) => [...prev, item])
+                }
             })
         });
+
         //   listP
     }, []);
     const columns = [
@@ -27,8 +38,9 @@ const ManagePostOfUser = () => {
         },
         {
             title: 'Ảnh đại diện',
-            dataIndex: 'avatar',
-            key: 'avatar',
+            dataIndex: 'image',
+            key: 'image',
+            render: (image) => <Image src={image[0]} width={70} height={70} />
         },
         {
             title: 'Tiêu đề',
@@ -42,8 +54,9 @@ const ManagePostOfUser = () => {
         },
         {
             title: 'Ngày đăng',
-            dataIndex: 'date',
-            key: 'date',
+            dataIndex: 'postingTime',
+            key: 'postingTime',
+            render: (postingTime) => dayjs(postingTime?.toDate()).fromNow(),
         },
         {
             title: 'Trạng thái',
@@ -71,11 +84,6 @@ const ManagePostOfUser = () => {
                 </span>
             ),
         },
-
-
-
-
-
     ];
     console.log(listPost)
     return (

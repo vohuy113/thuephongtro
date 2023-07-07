@@ -3,15 +3,16 @@ import { ref, set, update, push, onChildRemoved, remove } from "firebase/databas
 import { database } from "../firebase";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
-const writeUserData = (uid, name, email, imageUrl, birthday, address, phone) => {
+const writeUserData = (uid, name, email, imageUrl, birthday, address, phone, gender) => {
     if (uid) {
-        set(ref(database, 'Users/' + uid), {
+        update(ref(database, 'Users/' + uid), {
             fullname: name,
             email: email,
             avatar: imageUrl,
             birthday: birthday,
             address: address,
             phone: phone,
+            gender: gender,
         }, (error) => {
             if (error) {
                 console.log(error);
@@ -23,6 +24,7 @@ const writeUserData = (uid, name, email, imageUrl, birthday, address, phone) => 
         console.log("User not authenticated");
     }
 }
+
 export const writeLikePostToData = (uid, postID) => {
     const postListRef = ref(database, `Users/${uid}/listLike`);
     //const newPostRef = push(postListRef);

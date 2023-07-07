@@ -85,7 +85,7 @@ const Login = () => {
 
   return (
     <div className="bg-[#fff] w-[600px] p-[30px] pb-[100px] rounded-md shadow-sm">
-      <h3 className="font-semibold text-2xl mb-3">
+      <h3 className="font-semibold text-2xl mb-3 text-[#019594]">
         {isRegister ? "Đăng ký" : "Đăng nhập"}
       </h3>
       <div className="w-full flex flex-col gap-5">
@@ -99,7 +99,7 @@ const Login = () => {
         <Button
           onClick={isRegister ? signUp : signIn}
           text={isRegister ? "Đăng ký" : "Đăng nhập"}
-          bgColor={"bg-secondary1"}
+          bgColor={"bg-[#019594]"}
           textColor={"text-black"}
           fullWidth
         />

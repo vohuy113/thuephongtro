@@ -1,16 +1,41 @@
 import React from "react";
 import menuManage from "../../../ultils/menuManage";
 import "./style.css";
+import app, { database } from "../../../firebase";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../../api/AuthApi";
 import { } from "../../../components";
 import { AiOutlineUser } from "react-icons/ai";
 import { Avatar, Menu, Button } from 'antd';
-
+import { ref, child, get, off } from "firebase/database"
+import { getAuth } from "firebase/auth";
+const auth = getAuth(app);
 const Slidebar = () => {
-  const { currentUser } = useContext(AuthContext);
 
+  const { currentUser } = useContext(AuthContext);
+  const [avatar, setAvatar] = useState('')
+  useEffect(() => {
+    const dbRef = ref(database);
+    const getAvatar = async () => {
+      // console.log(database)
+      console.log(dbRef)
+      await get(child(dbRef, `Users/${auth.currentUser.uid}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val().avatar);
+          setAvatar(snapshot.val().avatar)
+        } else {
+          console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+    getAvatar();
+    // return () => {
+    console.log(dbRef);
+    // }
+  }, [])
   return (
     <div
       style={{
@@ -33,13 +58,15 @@ const Slidebar = () => {
           fontSize: "20px"
         }}
       >
-        <Avatar style={{ backgroundColor: '#8A2BE2', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={<AiOutlineUser style={{ color: 'white' }} />} />
-        {currentUser.displayName}
+        <Avatar src={avatar}
+          className="w-20 h-20 border-solid"
+          icon={<AiOutlineUser style={{ color: 'white' }} />} />
+        <div>{currentUser.displayName} </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-        {/* <Button text={"Nạp tiền"} bgColor={"bg-secondary1"} /> */}
+      {/* <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+        <Button text={"Nạp tiền"} bgColor={"bg-secondary1"} />
         <Button className="bg-secondary2" style={{ borderRadius: "5px" }}>Đăng tin</Button>
-      </div>
+      </div> */}
       <div className="slidebar-container">
         <Menu mode="inline" theme="light">
           {menuManage.map((item) => (

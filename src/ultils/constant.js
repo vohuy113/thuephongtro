@@ -13,4 +13,6 @@ export const path = {
   MANAGE_LIKE_POST: "tin-da-luu",
   SEARCH_RESULT: 'ket-qua-tim-kiem',
   // DETAIL_ALL: "chi-tiet/*",
+  MANAGE_MESSAGER: 'tin-nhan',
+  MESSAGER: 'tin-nhan/:postId'
 };

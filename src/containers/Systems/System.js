@@ -5,8 +5,10 @@ import { getAuth } from "firebase/auth";
 import app from "../../firebase";
 import { AuthContext } from "../../api/AuthApi";
 import { useLocation } from "react-router";
-import Header from "./Header";
+import Header from "./HeaderSystem";
 import Slidebar from "./Slidebar/Slidebar";
+import HeaderSystem from "./HeaderSystem";
+// import Header from "../../components/Header";
 // import { checkLogin } from "../../store/reducers/checkLogin";
 const System = () => {
   const { currentUser } = useContext(AuthContext);
@@ -20,9 +22,9 @@ const System = () => {
   }
   HeaderView();
   return (
-    <div className="w-1100 h-screen flex flex-col">
-      <Header />
-      <div style={{ height: "100%" }} className="flex flex-row">
+    <div className="w-full h-screen flex flex-col items-center">
+      <HeaderSystem />
+      <div className="w-1100 flex flex-row mt-20">
         <Slidebar />
         <Outlet />
       </div>

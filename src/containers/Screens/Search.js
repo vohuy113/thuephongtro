@@ -159,7 +159,7 @@ const Search = (props) => {
     <>
       <Form onFinish={handleSearch}>
         <Form.Item name="location">
-          < div className="flex flex-row bg-sky-400 p-1 w-full my-2 rounded-lg" >
+          < div className="flex flex-row bg-[#019594] p-1 w-full my-2 rounded-lg" >
             {/* <span
               onClick={() => showModal("location")}
               className="cursor-pointer m-1 w-1/4"
@@ -214,7 +214,7 @@ const Search = (props) => {
               <Button
                 // type="primary"
                 htmlType="submit"
-                className="w-full py-4 px-2 outline-none bg-secondary1 text-[13.3px] flex items-center justify-center text-white font-medium"
+                className="w-full py-4 px-2 outline-none bg-[#d05031] text-[13.3px] flex items-center justify-center text-white font-medium"
               >
                 <FiSearch />
                 Tìm kiếm

@@ -3,7 +3,7 @@ import { QRCode } from 'antd'
 import google_play from '../../src/assets/google_play.png'
 const Footer = () => {
     return (
-        <div className='flex flex-row justify-between mt-60'>
+        <div className='flex flex-row justify-between mt-10 w-[1280px]'>
             <div>
                 <div className='font-bold'>TÌM PHÒNG TRỌ GIÁ TỐT TRÊN ROOMIFY</div>
                 <QRCode value="https://example.com" />
@@ -18,9 +18,9 @@ const Footer = () => {
             <div>
                 <div className='font-bold'>LIỀN KẾT</div>
                 <div>
-                    <div>icon1</div>
-                    <div>icon2</div>
-                    <div>icon3</div>
+                    <img src='https://www.hcmus.edu.vn/attachments/article/4049/logo%20KHTN_REMAKE%20(1).png'
+                        className='w-32 h-fit'
+                    />
                 </div>
             </div>
         </div>
