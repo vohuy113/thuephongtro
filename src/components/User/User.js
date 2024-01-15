@@ -34,7 +34,7 @@ export const User = () => {
     getAvatar();
   }, [])
   return (
-    <Space wrap>
+    <Space wrap className="sm:hidden md:flex">
       <Avatar src={avatar} size="large" icon={<UserOutlined />} />
       <Button type="dashed">{auth.currentUser?.displayName}</Button>
     </Space>

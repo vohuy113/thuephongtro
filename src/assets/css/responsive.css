@@ -1,0 +1,6 @@
+/* Mobile */
+@media (max-width:800px){
+    .search-item {
+        margin: 4px 0;
+    }
+}

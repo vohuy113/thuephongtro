@@ -26,7 +26,6 @@ function App() {
     <AuthProvider>
       <ListPostedProvider>
         <LikePostContext.Provider value={[likedPosts, setLikedPosts]}>
-
           <div className="justify-center flex w-full bg-slate-50">
             <Routes>
               <Route path={path.HOME} element={<Home />}>

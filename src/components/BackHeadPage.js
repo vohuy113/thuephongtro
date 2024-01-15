@@ -4,17 +4,18 @@ import Button from './Button'
 
 const BackHeadPage = () => {
     const [backToTopButton, setBackToTopButton] = useState(false)
+    console.log('mounted');
     useEffect(() => {
-        window.addEventListener('scroll', () => {
-
+      
+        window.addEventListener('scroll', 
+        () => {
             if (window.scrollY > 200) {
                 setBackToTopButton(true)
                 // console.log(window.scrollY)
             } else {
                 setBackToTopButton(false);
             }
-
-        })
+    })
     }, [])
     const scrollUp = () => {
         window.scrollTo({

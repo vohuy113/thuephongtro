@@ -94,6 +94,7 @@ const Login = () => {
         <InputForm label={"Email"} onChange={(e) => setEmail(e.target.value)} />
         <InputForm
           label={"Mật khẩu"}
+          type='password'
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button

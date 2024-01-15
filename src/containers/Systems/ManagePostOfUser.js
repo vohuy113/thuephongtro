@@ -5,14 +5,29 @@ import { Table, Button, Popconfirm, Image } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ref, set, update } from 'firebase/database';
 import { database } from '../../firebase';
+import { doc } from 'firebase/firestore';
+import { db } from '../../firebase';
 // import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from "dayjs";
 
 
 const ManagePostOfUser = () => {
     const { currentUser } = useContext(AuthContext);
-    const handleDelete = () => {
-
+    const handleDelete = (id) => {
+        console.log(id);
+        const documentRef = doc(db, 'roomify', `${id}`);
+        console.log(documentRef)
+        // Xóa document từ Firestore
+        documentRef
+            .delete()
+            .then(() => {
+                console.log("Đã xóa bài đăng có id:", id);
+                // Thực hiện các hành động khác sau khi xóa thành công
+            })
+            .catch((error) => {
+                console.error("Lỗi khi xóa bài đăng:", error);
+                // Xử lý lỗi nếu có
+            });
     }
     const [listPost, setListPost] = useState([]);
     useEffect(() => {
@@ -27,7 +42,7 @@ const ManagePostOfUser = () => {
                 }
             })
         });
-
+        console.log(listPost);
         //   listP
     }, []);
     const columns = [
@@ -73,7 +88,7 @@ const ManagePostOfUser = () => {
                     </Button>
                     <Popconfirm
                         title="Bạn có chắc muốn xóa bài đăng này?"
-                        onConfirm={() => handleDelete(record.id)}
+                        onConfirm={() => handleDelete(record.postId)}
                         okText="Đồng ý"
                         cancelText="Hủy"
                     >

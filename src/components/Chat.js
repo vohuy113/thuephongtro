@@ -9,8 +9,24 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const { currentUser } = useContext(AuthContext);
-    const { postId } = useParams();
+    const { title, postId } = useParams();
+    console.log(postId)
+    console.log(title)
     const [listPosted, setListPosted] = useState([]);
+    // const [item, setItem] = useState(() => {
+    //     return getItemPost(postId).then();
+    //   });
+    // useEffect(() => {
+    //     postId && getItemPost(postId).then(setItem);
+    //   }, [postId]);
+    // console.log(item)
+    console.log(messages)
+    const checkSenderId = (id) => {
+        if (messages.length === 0 || messages.length === 1)
+            return true
+        else
+            return messages.some(message => message.senderId === id);
+    };
     useEffect(() => {
         // Lắng nghe sự thay đổi trong nút "messages" trong cơ sở dữ liệu Firebase
         const dbRef = ref(database);
@@ -56,7 +72,7 @@ const Chat = () => {
     console.log(messages[0]?.senderId)
     console.log(currentUser.uid)
     const sendMessage = () => {
-        if (newMessage !== '') {
+        if (newMessage !== '' && checkSenderId(currentUser.uid)) {
             // Ghi dữ liệu tin nhắn mới vào cơ sở dữ liệu Firebase
             const messagesRef = ref(database, `messages/${postId}`);
             push(messagesRef, {
@@ -105,7 +121,7 @@ const Chat = () => {
                     ))}
                 </div> */}
                 <div>
-                    {isCheck &&
+                    {isCheck && checkSenderId(currentUser.uid) &&
                         messages.map((message) => (
                             <div className='flex items-center'
                                 onMouseEnter={() => handleMouseEnter(message.timestamp)}

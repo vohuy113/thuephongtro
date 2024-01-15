@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from "react";
 import { Input, Button } from "antd";
 import SearchItem from "../../components/SearchItem/SearchItem";
 import icons from "../../ultils/icons";
+import '../../assets/css/responsive.css'
 import { Modal, Slider, List, Cascader, Form } from "antd";
 import { apiGetAllVietNasm, apiGetPublicDistrict, apiGetPublicProvince } from "../../api/getApiProvince";
 import { RightOutlined } from "@ant-design/icons"
@@ -24,35 +25,25 @@ const Search = (props) => {
   // const [content, setContent] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
-  // const [rangeValue, setRangeValue] = useState(50)
   const [queries, setQueries] = useState({});
   const showModal = (type) => {
     setIsModalOpen(true);
     setModalType(type);
   };
   const [searchParams, setSearchParams] = useSearchParams()
-
   const [inputValue, setInputValue] = useState([0, 30])
   const [inputValueDt, setInputValueDt] = useState([0, 90])
-
   // send data:
-
   const sendData = (q) => {
     props.parentCallback(q);
   }
-
-
   const handleSearch = () => {
     const q = inputValue.concat(inputValueDt);
     if (value) {
-      q.push(value); // add value to the end of the array
+      q.push(value);
     }
-
-    console.log('search');
     sendData(q);
   }
-
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -85,7 +76,6 @@ const Search = (props) => {
       case "location":
         {
           //const options = provinces;
-
           // const onChange = async (value) => {
           //   console.log(value);
           //   // const provinceIndex = provinces.findIndex((province) => province.province_id == value);
@@ -159,7 +149,7 @@ const Search = (props) => {
     <>
       <Form onFinish={handleSearch}>
         <Form.Item name="location">
-          < div className="flex flex-row bg-[#019594] p-1 w-full my-2 rounded-lg" >
+          < div className="bg-[#019594] rounded-lg grid wide" >
             {/* <span
               onClick={() => showModal("location")}
               className="cursor-pointer m-1 w-1/4"
@@ -172,58 +162,59 @@ const Search = (props) => {
               // style={{ index: 1 }}
               />
             </span> */}
-            <span className="m-1 w-1/4 cursor-pointer overflow-hidden">
-              <Cascader showSearch fieldNames={{
-                label: 'name',
-                value: 'codename',
-                children: 'districts',
+              <div className="row p-3">
+                  <span className="cursor-pointer overflow-hidden col l-3 s-12 search-item">
+                  <Cascader showSearch fieldNames={{
+                    label: 'name',
+                    value: 'codename',
+                    children: 'districts',
 
-              }} options={provinces} onChange={onChange} changeOnSelect
-                style={{ height: '100%' }}
-                placeholder="Toàn quốc"
-              />
-            </span>
-            <span
-              onClick={() => showModal("price")}
-              className="cursor-pointer m-1 w-1/4"
-            >
-              <SearchItem
-                IconBefore={<TbReportMoney />}
-                IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
-                // IconAfter={<div onClick={() => setInputValue([])}><BsX color="rgb(156, 163, 175)" /></div>}
-                text={`${inputValue?.[0]} tr - ${inputValue?.[1]} tr`}
-                defaultText={"Chọn giá"}
-              />
-
-            </span>
-            <span
-              onClick={() => showModal("area")}
-              className="cursor-pointer m-1 w-1/4"
-            >
-              <SearchItem
-                IconBefore={<RiCrop2Line />}
-                IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
-                //   text={queries.area}
-                text={`${inputValueDt?.[0]} m2 - ${inputValueDt?.[1]} m2`}
-                defaultText={"Chọn diện tích"}
-              />
-            </span>
-            {/* <Input placeholder="Nhập từ khóa" className="flex-1 m-1" /> */}
-            <span className="m-1 w-1/4">
-              {/* <Link to={"/ket-qua-tim-kiem"} > */}
-              <Button
-                // type="primary"
-                htmlType="submit"
-                className="w-full py-4 px-2 outline-none bg-[#d05031] text-[13.3px] flex items-center justify-center text-white font-medium"
-              >
-                <FiSearch />
-                Tìm kiếm
-              </Button>
-              {/* </Link> */}
-
-            </span>
+                  }} options={provinces} onChange={onChange} changeOnSelect
+                    style={{ height: '100%' }}
+                    placeholder="Toàn quốc"
+                  />
+                  </span>
+                  <span
+                  onClick={() => showModal("price")}
+                  className="cursor-pointer col l-3 s-12 search-item"
+                >
+                  <SearchItem
+                    IconBefore={<TbReportMoney />}
+                    IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
+                    // IconAfter={<div onClick={() => setInputValue([])}><BsX color="rgb(156, 163, 175)" /></div>}
+                    text={`${inputValue?.[0]} tr - ${inputValue?.[1]} tr`}
+                    defaultText={"Chọn giá"}
+                  />
+    
+                  </span>     
+                  <span
+                  onClick={() => showModal("area")}
+                  className="cursor-pointer col l-3 s-12 search-item"
+                >
+                  <SearchItem
+                    IconBefore={<RiCrop2Line />}
+                    IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
+                    //   text={queries.area}
+                    text={`${inputValueDt?.[0]} m2 - ${inputValueDt?.[1]} m2`}
+                    defaultText={"Chọn diện tích"}
+                  />
+                  </span>
+                  <span className="col l-3 s-12 search-item">
+                  {/* <Link to={"/ket-qua-tim-kiem"} > */}
+                  <Button
+                    // type="primary"
+                    htmlType="submit"
+                    className="w-full py-4 px-2 outline-none bg-[#d05031] text-[13.3px] flex items-center justify-center text-white font-medium"
+                  >
+                    <FiSearch />
+                    Tìm kiếm
+                  </Button>
+                  {/* </Link> */}
+    
+                  </span>
+              </div>
+            {/* <Input placeholder="Nhập từ khóa" className="flex-1 m-1" /> */} 
           </div >
-
         </Form.Item>
       </Form>
 

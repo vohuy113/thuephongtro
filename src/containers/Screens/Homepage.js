@@ -93,42 +93,61 @@ const Homepage = () => {
   }, [listLike]);
   console.log(currentUser);
   return (
-    <div className="w-[1108px] items-center justify-between">
-      <div className="w-full flex flex-col items-center justify-start">
-        <Outlet />
-      </div>
-      < Search parentCallback={callbackFunction} />
-      {/* <p>{message}</p> */}
-      <div className="w-full p-2">
-        <MySlider></MySlider>
-
-      </div>
-      <div className="w-full flex flex-row justify-around">
-        <div className="w-3/4">
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
-              pageSize: 4,
-            }}
-            dataSource={listPost}
-            renderItem={item => (
-              <Item key={item.postId} post={item} handleLike={handleLike} />
-            )}
-            footer={<div>Antd List footer part</div>}
-          />
+    // <div className="w-[1200px] items-center justify-between">
+    //   <div className="w-full flex flex-col items-center justify-start">
+    //     <Outlet />
+    //   </div>
+    //   < Search parentCallback={callbackFunction} />
+    //   {/* <p>{message}</p> */}
+    //   <div className="w-full p-2">
+    //     <MySlider></MySlider>
+    //   </div>
+    <div className="grid wide">
+      <div className="row">
+        <div className="col l-12 s-12">
+          <Outlet/>
         </div>
-        <div className="w-1/4 ml-5 mt-5 rounded-md overflow-hidden">
-          <FindByTag />
-
-          <div className="bg-slate-100 mt-3 h-10 mb-1  w-full ">
-            <h2 className="text-center text-slate-800 font-bold text-lg">Tin mới đăng</h2>
-          </div>
-
-          <RecentPosts />
+      </div>
+      <div className="row">
+        <div className="col l-12 s-12">
+          <Search parentCallback={callbackFunction} />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col l-12 s-0">
+          <MySlider></MySlider>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col l-12 s-12">
+        <div className="grid wide">
+        <div className="row">
+            <div className="col l-9 s-12">
+             <List
+              itemLayout="vertical"
+              size="large"
+              pagination={{
+                onChange: (page) => {
+                  console.log(page);
+                },
+                pageSize: 4,
+              }}
+              dataSource={listPost}
+              renderItem={item => (
+                <Item key={item.postId} post={item} handleLike={handleLike} />
+              )}
+              footer={<div>Antd List footer part</div>}
+              />
+            </div>
+            <div className="col l-3 mt-5 s-0 rounded-md overflow-hidden">
+              <FindByTag />
+              <div className="bg-slate-100 mt-3 h-10 mb-1  w-full ">
+                <h2 className="text-center text-slate-800 font-bold text-lg">Tin mới đăng</h2>
+              </div>
+              <RecentPosts />
+            </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
